@@ -1,0 +1,25 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container-fluid">
+        <!-- 로고 완벽 중앙 정렬 -->
+        <a class="navbar-brand" href="{% url 'app:index' %}">
+            <img src="{% static 'img/ic_logo.png' %}" alt="로고">
+        </a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- 로그인 버튼 우측 정렬 -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">로그인</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

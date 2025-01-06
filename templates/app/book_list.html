@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <h1 class="text-center"> <img src="{% static 'img/txt_search.png' %}" alt="도서검색대" style="height:50px;"></h1>
+    <form method="get" class="input-group text-center" onsubmit="return validateSearch()">
+        <input type="text" id="keyword" name="q" class="form-control w-50 mx-auto" placeholder="책 제목을 입력하세요" value="{{ query }}">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-search-book">
+                <img src="{% static 'img/ic_search.png' %}" alt="검색" style="height:30px;">
+            </button>
+        </div>
+    </form>
+    <div class="container mt-5">
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 10%;">책장 번호</th>
+                <th style="width: 55%;">제목</th>
+                <th style="width: 25%;">저자</th>
+                <th style="width: 10%;">완결 여부</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if page_obj %}
+                {% for book in page_obj %}
+                <tr>
+                    <td>{{ book.shelf_number }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.is_complete|yesno:"완결,미완결" }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">검색 결과가 없습니다.</td>
+                </tr>
+                <script>
+                    window.onload = function() {
+                        alert('검색 결과가 없습니다!');
+                    }
+                </script>
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1&q={{ query }}">처음</a>
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">이전</a>
+        {% endif %}
+        
+        <span class="current">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ query }}">다음</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}">끝</a>
+        {% endif %}
+    </div>
+    <div class="wd100 text-center mt-5">
+        <img src="{% static 'img/chilgokgun_waegwan_map.jpg' %}" class="img-fluid"/>
+    </div>
+</div>
+
+<!-- ✅ 검색어 미입력 경고 JavaScript -->
+<script>
+    function validateSearch() {
+        var keyword = document.getElementById('keyword').value.trim();
+        if (keyword === '') {
+            alert('검색어를 입력해 주세요!');
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}
