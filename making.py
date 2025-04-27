@@ -5,10 +5,7 @@ from app.models import Book
 filename = 'Book_list.xlsx'
 
 for i in range(1,24):
-    if i == 11:
-        None
-    else:
-        data_sheet = pd.read_excel(filename, engine='openpyxl',  sheet_name = '책장 %d' %i  )
+    data_sheet = pd.read_excel(filename, engine='openpyxl',  sheet_name = '책장 %d' %i  )
     
     for j in data_sheet.index:
         if data_sheet['Completed'][j]  == '완결':
